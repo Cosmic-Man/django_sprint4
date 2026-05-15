@@ -26,10 +26,18 @@
             {% csrf_token %}
             {% if not '/delete_comment/' in request.path %}
               {% bootstrap_form form %}
+              {% bootstrap_button button_type="submit" content="Отправить" %}
             {% else %}
               <p>{{ comment.text }}</p>
+              <div class="card-body">
+                    <p>Вы уверены, что хотите удалить комментарий?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Да, удалить</button>
+                        <a href="{% url 'blog:post_detail' comment.post.pk %}" class="btn btn-secondary">Отмена</a>
+                    </form>
+                </div>
             {% endif %}
-            {% bootstrap_button button_type="submit" content="Отправить" %}
           </form>
         </div>
       </div>

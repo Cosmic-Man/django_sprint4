@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}
+  Редактирование профиля
+{% endblock %}
+
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card col-4 m-3">
+      <div class="card-header">
+        Редактирование профиля
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <div class="d-flex justify-content-between mt-3">
+            {% bootstrap_button button_type="submit" content="Сохранить изменения" button_class="btn-primary" %}
+            <a href="{% url 'blog:profile' username=user.username %}" class="btn btn-secondary">Отмена</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
