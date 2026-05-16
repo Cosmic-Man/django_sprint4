@@ -88,5 +88,5 @@ def get_visible_posts_for_user(
         queryset=queryset,
         author=author,
         category=category,
-        ilter_published=True
+        filter_published=True
     )
