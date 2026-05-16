@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "text", "category", "image", "pub_date"]
+        exclude = ["author"]
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),
             "text": forms.Textarea(attrs={"class": "form-control",
@@ -14,8 +14,11 @@ class PostForm(forms.ModelForm):
             "category": forms.Select(attrs={"class": "form-select"}),
             "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
             "pub_date": forms.DateTimeInput(
-                attrs={"class": "form-control", "type": "datetime-local"}
+                attrs={"class": "form-control",
+                       "type": "datetime-local"}
             ),
+            "is_published": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}),
         }
 
 
@@ -65,6 +68,6 @@ class ProfileForm(forms.ModelForm):
             "email": "Электронная почта",
         }
         help_texts = {
-            "username":
-            "Обязательное поле. Только буквы, цифры и символы @/./+/-/_.",
+            "username": "Обязательное поле. "
+            "Только буквы, цифры и символы @/./+/-/_.",
         }

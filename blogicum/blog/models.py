@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-User = get_user_model()  # User модель
+User = get_user_model()
 
 
 class AbstractModel(models.Model):
@@ -23,7 +23,6 @@ class AbstractModel(models.Model):
         return self.title
 
 
-# Тематическая категория
 class Category(AbstractModel):
     description = models.TextField(verbose_name="Описание")
     slug = models.SlugField(
@@ -38,10 +37,9 @@ class Category(AbstractModel):
         verbose_name_plural = "Категории"
 
     def __str__(self):
-        return self.description
+        return self.title
 
 
-# Географическая метка
 class Location(AbstractModel):
     name = models.CharField(max_length=256, verbose_name="Название места")
 
@@ -53,7 +51,6 @@ class Location(AbstractModel):
         return self.name
 
 
-# Публикация
 class Post(AbstractModel):
     text = models.TextField(verbose_name="Текст")
     pub_date = models.DateTimeField(
@@ -65,7 +62,7 @@ class Post(AbstractModel):
         User,
         on_delete=models.CASCADE,
         verbose_name="Автор публикации",
-        related_name="user",
+        related_name="posts",
     )
     location = models.ForeignKey(
         Location,
@@ -73,10 +70,14 @@ class Post(AbstractModel):
         blank=True,
         null=True,
         verbose_name="Местоположение",
+        related_name="posts",
     )
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL,
-        null=True, verbose_name="Категория"
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name="Категория",
+        related_name="posts",
     )
     image = models.ImageField(
         "Изображение", upload_to="posts_images/", blank=True, null=True
@@ -91,7 +92,6 @@ class Post(AbstractModel):
         return self.title
 
 
-# Комментарий
 class Comment(models.Model):
     text = models.TextField("Текст комментария")
     author = models.ForeignKey(

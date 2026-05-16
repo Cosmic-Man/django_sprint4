@@ -57,17 +57,14 @@ class PostAdmin(admin.ModelAdmin):
         "category__title",
         "location__name",
     )
-    list_filter = ("is_published",
-                   "pub_date",
-                   "category",
-                   "location",
-                   "author")
+    list_filter = ("is_published", "pub_date",
+                   "category", "location", "author")
     list_editable = ("is_published",)
     readonly_fields = ("created_at",)
     fieldsets = (
         (None, {"fields": ("title", "text")}),
-        ("Публикация", {"fields": ("pub_date", "author",
-                                   "category", "location")}),
+        ("Публикация", {"fields":
+                        ("pub_date", "author", "category", "location")}),
         (
             "Параметры",
             {"fields": ("is_published", "created_at"),
